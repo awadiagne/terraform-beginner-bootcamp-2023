@@ -87,3 +87,52 @@ In our case, we'll need to update the `.gitpod.yml` file to call the installatio
     before: |
       source ./bin/install_aws_cli
 ```
+
+## Project Environment Variables
+
+- List out all Environment Variables using the `env` command
+
+- Filter specific env vars using `grep` eg. `env | grep AWS_`
+
+Let's create a new project environment variable called **PROJECT_ROOT** referring to the root directory.
+
+- We can set environment variables by exporting them to the terminals:
+
+```bash
+export PROJECT_ROOT=/workspace/terraform-beginner-bootcamp-2023
+```
+
+- We can also unset environment variables:
+
+```bash
+unset PROJECT_ROOT
+```
+
+- We can set an env var temporarily when just running a command
+
+```bash
+HELLO='world' ./bin/print_message
+```
+
+- Within a bash script we can set env without writing export eg.
+
+```bash
+#!/usr/bin/env bash
+
+HELLO='world'
+
+echo $HELLO
+```
+
+- To print an env var, the `echo` command is used eg. `echo $HELLO`
+
+- By default, env vars are not persisted. So, on opening up a new bash terminal, the env vars set in another terminal window are not seen.
+
+- To persist an env var across all future bash terminals, it must be set in bash profile. eg. `.bash_profile`
+
+- It's possible to persist env vars into gitpod by storing them in Gitpod Secrets Storage.
+```
+gp env HELLO='world'
+```
+
+- It's also possible to set env vars in the `.gitpod.yml` but this can only contain **non-sensitive** env vars.
