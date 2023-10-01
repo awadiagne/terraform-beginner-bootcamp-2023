@@ -162,3 +162,63 @@ aws sts get-caller-identity
 ..* First, let's create a new user in IAM console with admin privileges for the bootcamp that will call `terraform-bootcamp-user`.
 ..* Then, we'll generate access keys
 ..* Finally, we'll put the access keys in the `.env` file and the gitpod environment with `gp env`
+
+## Terraform Basics
+
+### Terraform Registry
+
+
+Terraform sources their providers and modules from the Terraform registry which located at [registry.terraform.io](https://registry.terraform.io/)
+
+- **Providers** is an interface to APIs that will allow to create resources in terraform.
+- **Modules** are a way to make large amount of terraform code modular, portable and sharable.
+
+[Random Terraform Provider](https://registry.terraform.io/providers/hashicorp/random)
+
+### Terraform Console
+
+- List all the Terraform commands by simply typing `terraform`
+
+#### Terraform Init
+
+At the start of a new terraform project, run `terraform init` to download the binaries for the terraform providers that will be used in this project.
+
+#### Terraform Plan
+
+`terraform plan`
+
+- This will generate out a changeset about the state of our infrastructure and what will be changed.
+- This changeset can be output ie. "plan" to be passed to an apply, but it's often ignored.
+
+#### Terraform Apply
+
+`terraform apply`
+
+- This will run a plan and pass the changeset to be executed by terraform. Apply should prompt **yes** or **no**.
+- To automatically approve an apply, the auto approve flag can be set eg. `terraform apply --auto-approve`
+
+#### Terraform Destroy
+
+`terraform destroy`
+- This will destroy resources.
+- The auto approve flag can also be used here to skip the approve prompt eg. `terraform apply --auto-approve`
+
+#### Terraform Lock Files
+
+`.terraform.lock.hcl` contains the locked versioning for the providers or modules that should be used with this project.
+
+- The Terraform Lock File **should be committed** to your Version Control System (VSC) eg. Github
+
+#### Terraform State Files
+
+`.terraform.tfstate` contains information about the current state of your infrastructure.
+
+- This file **should not be commited** to your VCS.
+- This file can contain sensentive data.
+- If this file is lost, the state of your infrastructure will be unknown.
+
+`.terraform.tfstate.backup` is the previous state file state.
+
+#### Terraform Directory
+
+`.terraform` directory contains binaries of terraform providers.
