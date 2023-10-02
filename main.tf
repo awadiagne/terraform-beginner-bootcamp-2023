@@ -1,4 +1,12 @@
 terraform {
+  cloud {
+    organization = "tf-beginner-bootcamp-2023"
+
+    workspaces {
+      name = "terra-house"
+    }
+  }
+
   required_providers {
     random = {
       source = "hashicorp/random"
