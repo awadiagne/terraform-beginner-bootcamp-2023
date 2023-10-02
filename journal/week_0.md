@@ -246,3 +246,5 @@ open /home/gitpod/.terraform.d/credentials.tfrc.json
     }
   }
 }
+
+- A workaround for automating the generation of the credentials for terraform with the following bash script [bin/generate_tfrc_credentials](bin/generate_tfrc_credentials)
