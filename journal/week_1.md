@@ -336,7 +336,7 @@ locals {
 
 ## Terraform Data Sources
 
-- This allows use to source data from cloud resources.
+- This allows to use source data from cloud resources.
 - This is useful when we want to reference cloud resources without importing them.
 
 ```tf
