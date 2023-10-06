@@ -287,3 +287,38 @@ module "consul" {
 ```
 
 [Modules Sources](https://developer.hashicorp.com/terraform/language/modules/sources)
+
+## Considerations when using ChatGPT to write Terraform
+
+LLMs such as ChatGPT may not be trained on the latest documentation or information about Terraform. So, it may likely produce older examples that could be deprecated. Often affecting providers.
+
+## Working with Files in Terraform
+
+### Fileexists function
+
+This is a built in terraform function to check the existence of a file.
+
+```tf
+condition = fileexists(var.error_html_filepath)
+```
+
+Refer to https://developer.hashicorp.com/terraform/language/functions/fileexists
+
+### Filemd5
+
+Refer to https://developer.hashicorp.com/terraform/language/functions/filemd5
+
+### Path Variable
+
+In terraform there is a special variable called `path` that allows us to reference local paths:
+- **path.module**: gets the path for the current module
+- **path.root**: gets the path for the root module
+[Special Path Variable](https://developer.hashicorp.com/terraform/language/expressions/references#filesystem-and-workspace-info)
+
+```
+resource "aws_s3_object" "index_html" {
+  bucket = aws_s3_bucket.website_bucket.bucket
+  key    = "index.html"
+  source = "${path.root}/public/index.html"
+}
+```
