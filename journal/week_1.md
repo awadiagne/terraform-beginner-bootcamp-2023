@@ -81,7 +81,7 @@ PROJECT_ROOT
 
 - `main.tf`:
 
-```hcl
+```tf
 # https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string
 resource "random_string" "bucket_name" {
   lower = true
@@ -104,7 +104,7 @@ resource "aws_s3_bucket" "example" {
 
 - `outputs.tf`:
 
-```hcl
+```tf
 output "random_bucket_name" {
   value = random_string.bucket_name.result
 }
@@ -112,7 +112,7 @@ output "random_bucket_name" {
 
 - `providers.tf`:
 
-```hcl
+```tf
 terraform {
   required_providers {
     random = {
@@ -135,7 +135,7 @@ provider "random" {
 
 - `variables.tf`:
 
-```hcl
+```tf
 variable "user_uuid" {
   description = "The UUID of the user"
   type        = string
@@ -148,7 +148,7 @@ variable "user_uuid" {
 
 - `terraform.tfvars`:
 
-```hcl
+```
 user_uuid = "92e7bb7c-340e-4481-b069-79b4f94e9dce"
 ```
 
@@ -227,3 +227,63 @@ Terraform uses a specific order of precedence when determining the value of a va
 ### Fix Manual Configuration
 
 If someone goes and delete or modifies cloud resource manually through ClickOps and we run `terraform plan`, it will attempt to put our infrastructure back into the expected state fixing Configuration Drift.
+
+## Fix using Terraform Refresh
+
+- In Terraform, refreshing your state file updates Terraform's knowledge of your infrastructure, as represented in your state file, with the actual state of your infrastructure. 
+- Terraform `plan` and `apply` operations run an implicit in-memory refresh as part of their functionality, reconciling any drift from your state file before suggesting infrastructure changes. 
+- You can also update your state file without making modifications to your infrastructure using the `-refresh-only` flag for **plan** and **apply** operations.
+
+[Use refresh-only mode to sync Terraform state](https://developer.hashicorp.com/terraform/tutorials/state/refresh#refresh)
+
+```sh
+terraform apply -refresh-only -auto-approve
+```
+
+## Terraform Modules
+
+### Terraform Module Structure
+
+It is recommended to place modules in a `modules` directory when locally developing modules.
+
+### Passing Input Variables
+
+We can pass **input variables** to our module. The module has to declare the terraform variables in its own variables.tf
+
+```tf
+module "terrahouse_aws" {
+  source = "./modules/terrahouse_aws"
+  user_uuid = var.user_uuid
+  bucket_name = var.bucket_name
+}
+```
+
+### Modules Sources
+
+Using the source, we can import the module from various places eg:
+- **Locally**
+```tf
+module "terrahouse_aws" {
+  source = "./modules/terrahouse_aws"
+}
+```
+
+- From **Github**
+```tf
+module "consul" {
+  source = "github.com/hashicorp/example"
+}
+```tf
+module "consul" {
+  source = "git@github.com:hashicorp/example.git"
+}
+
+- From the **Terraform Registry**
+```tf
+module "consul" {
+  source = "hashicorp/consul/aws"
+  version = "0.1.0"
+}
+```
+
+[Modules Sources](https://developer.hashicorp.com/terraform/language/modules/sources)
