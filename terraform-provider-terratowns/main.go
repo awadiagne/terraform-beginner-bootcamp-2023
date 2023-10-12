@@ -284,7 +284,7 @@ func resourceHouseUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 	// StatusOK = 200 HTTP Response Code
 	if resp.StatusCode != http.StatusOK {
 		return diag.FromErr(fmt.Errorf("failed to update home resource, status_code: %d, status: %s, body %s", resp.StatusCode, resp.Status, responseData))
-	Ò}
+	}
 
 	log.Print("resourceHouseUpdate:end")
 

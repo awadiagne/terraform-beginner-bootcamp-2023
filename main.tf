@@ -42,7 +42,7 @@ a mix of action, humor, and heartwarming moments, making it one of the most belo
 and successful manga series of all time.
 DESCRIPTION
   domain_name = module.home_one_piece_hosting.domain_name
-  town = "missingo"
+  town = "video-valley"
   content_version = 1
 }
 
@@ -65,6 +65,6 @@ in the magical world. The series has been immensely successful, both in literatu
 captivating readers and viewers of all ages.
 DESCRIPTION
   domain_name = module.home_harry_potter_hosting.domain_name
-  town = "missingo"
+  town = "video-valley"
   content_version = var.harry_potter.content_version
 }
